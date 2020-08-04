@@ -1,0 +1,97 @@
+import React, { Component } from 'react';
+import FieldLabel from '../../components/label/index';
+import CustomTextInput from '../../components/inputfield/index';
+import { verifyUser } from './services/index';
+
+class Login extends Component {
+
+    state = {
+        email: "",
+        password: "",
+    }
+
+    onChanges = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        this.setState({ [name]: `${value}` });
+    }
+
+
+    validation = async () => {
+        let response = await verifyUser(this.state);
+        console.log(response, "-------------------response")
+
+    }
+
+    render() {
+        return (
+            <div>
+
+                <div>
+                    <div class="cotainer">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-header">LOGIN</div>
+                                    <div class="card-body">
+
+                                        {/* login form */}
+
+                                        <form action="/">
+
+                                            {/* rendering the email field */}
+                                            <div class="form-group row">
+                                                <FieldLabel
+                                                    classStyle="col-md-4 col-form-label text-md-right"
+                                                    textLabel={'E-Mail Address'}
+                                                />
+                                                <div class="col-md-6">
+                                                    <CustomTextInput
+                                                        type="email"
+                                                        name="email"
+                                                        value={this.state.email}
+                                                        onChanges={this.onChanges}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {/* rendering the password field */}
+                                            <div class="form-group row">
+                                                <FieldLabel
+                                                    classStyle="col-md-4 col-form-label text-md-right"
+                                                    textLabel={'Password'}
+                                                />
+                                                <div class="col-md-6">
+                                                    <CustomTextInput
+                                                        type="password"
+                                                        name="password"
+                                                        value={this.state.password}
+                                                        onChanges={this.onChanges}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {/* submit button & forgot password  */}
+                                            <div class="col-md-6 offset-md-4">
+                                                <button type="submit" class="btn btn-primary" onClick={() => this.validation}>
+                                                    SUBMIT
+                                            </button>
+                                                <a href="/resetpassword" class="btn btn-link">
+                                                    Forgot Your Password?
+                                </a>
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+export default Login;
